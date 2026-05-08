@@ -1,0 +1,22 @@
+# Histórias de Usuário — Sistema de Moeda Estudantil
+
+| ID | História |
+| -- | -- |
+| 01 | Eu, como aluno, quero me cadastrar no sistema para poder participar do programa de moeda estudantil. |
+| 02 | Eu, como aluno, quero fazer login para acessar minha conta com segurança. |
+| 03 | Eu, como aluno, quero consultar meu saldo para saber quantas moedas possuo. |
+| 04 | Eu, como aluno, quero consultar meu extrato para visualizar moedas recebidas e trocadas. |
+| 05 | Eu, como aluno, quero visualizar vantagens disponíveis para escolher onde gastar minhas moedas. |
+| 06 | Eu, como aluno, quero resgatar uma vantagem para trocar minhas moedas por produtos ou descontos. |
+| 07 | Eu, como aluno, quero receber um cupom por email para utilizar a vantagem resgatada presencialmente. |
+| 08 | Eu, como professor, quero fazer login para acessar minha conta no sistema. |
+| 09 | Eu, como professor, quero consultar meu saldo para saber quantas moedas ainda posso distribuir. |
+| 10 | Eu, como professor, quero enviar moedas a um aluno para reconhecer seu bom desempenho ou participação. |
+| 11 | Eu, como professor, quero informar o motivo do envio das moedas para justificar o reconhecimento do aluno. |
+| 12 | Eu, como professor, quero consultar meu extrato para visualizar as moedas que já distribuí. |
+| 13 | Eu, como empresa parceira, quero me cadastrar no sistema para oferecer vantagens aos alunos. |
+| 14 | Eu, como empresa parceira, quero fazer login para acessar minhas funcionalidades. |
+| 15 | Eu, como empresa parceira, quero cadastrar vantagens com descrição, foto e custo em moedas para que os alunos possam resgatá-las. |
+| 16 | Eu, como empresa parceira, quero receber um email com o código de conferência para validar a troca presencial. |
+| 17 | Eu, como instituição de ensino, quero pré-cadastrar professores para que eles possam participar do sistema. |
+| 18 | Eu, como instituição de ensino, quero manter instituições participantes cadastradas para que alunos e professores estejam vinculados corretamente. |
