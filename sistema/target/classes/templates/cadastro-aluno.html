@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Aluno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Cadastro de Aluno</h2>
+            <form th:action="@{/cadastro/aluno}" th:object="${aluno}" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Nome Completo</label>
+                    <input type="text" th:field="*{nome}" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" th:field="*{email}" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input type="password" th:field="*{senha}" class="form-control" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">CPF</label>
+                        <input type="text" th:field="*{cpf}" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">RG</label>
+                        <input type="text" th:field="*{rg}" class="form-control" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Endereço</label>
+                    <input type="text" th:field="*{endereco}" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Instituição</label>
+                    <select th:field="*{instituicao}" class="form-select">
+                        <option value="PUC Minas">PUC Minas</option>
+                        <option value="UFMG">UFMG</option>
+                        <option value="UEMG">UEMG</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Curso</label>
+                    <input type="text" th:field="*{curso}" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

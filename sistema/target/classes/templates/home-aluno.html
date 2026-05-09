@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Aluno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Olá, <span th:text="${user.nome}">Aluno</span>!</h1>
+        <div class="text-end">
+            <h3 class="text-success">Saldo: <span th:text="${user.saldo}">0</span> moedas</h3>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Sair</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Vantagens Disponíveis</h3>
+            <div class="row">
+                <div class="col-md-6 mb-3" th:each="v : ${vantagens}">
+                    <div class="card">
+                        <img th:src="${v.fotoUrl}" class="card-img-top" alt="Vantagem">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${v.descricao}">Descrição</h5>
+                            <p class="card-text">Custo: <strong th:text="${v.custo}">0</strong> moedas</p>
+                            <p class="small text-muted">Empresa: <span th:text="${v.empresa.nome}">Empresa</span></p>
+                            <form th:action="@{/trocar-vantagem}" method="post">
+                                <input type="hidden" name="vantagemId" th:value="${v.id}">
+                                <button type="submit" class="btn btn-primary" th:disabled="${user.saldo < v.custo}">Resgatar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Extrato</h3>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="t : ${transacoes}">
+                    <div class="d-flex justify-content-between">
+                        <span th:text="${t.remetente.nome}">Remetente</span>
+                        <span class="badge bg-success" th:text="'+' + ${t.valor}">+10</span>
+                    </div>
+                    <small class="text-muted" th:text="${#temporals.format(t.data, 'dd/MM/yyyy HH:mm')}">Data</small><br>
+                    <small th:text="${t.motivo}">Motivo</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+-- Senha padrão '123' criptografada com BCrypt: $2a$10$Y4lX6wIMY0CvVAYDMwGY3exvCCRu9MWlRFCJXIUFr7cIQ0HRn7vIu
+
+-- Professor
+INSERT INTO USUARIO (ID, NOME, EMAIL, SENHA, TIPO) VALUES (1, 'Professor João', 'joao@puc.br', '$2a$10$Y4lX6wIMY0CvVAYDMwGY3exvCCRu9MWlRFCJXIUFr7cIQ0HRn7vIu', 'PROFESSOR');
+INSERT INTO PROFESSOR (ID, CPF, DEPARTAMENTO, INSTITUICAO, SALDO) VALUES (1, '111.111.111-11', 'Engenharia', 'PUC Minas', 1000);
+
+-- Empresa
+INSERT INTO USUARIO (ID, NOME, EMAIL, SENHA, TIPO) VALUES (2, 'Restaurante Universitário', 'contato@ru.com', '$2a$10$Y4lX6wIMY0CvVAYDMwGY3exvCCRu9MWlRFCJXIUFr7cIQ0HRn7vIu', 'EMPRESA');
+INSERT INTO EMPRESA (ID, CNPJ) VALUES (2, '22.222.222/0001-22');
+
+-- Vantagens
+INSERT INTO VANTAGEM (DESCRICAO, CUSTO, FOTO_URL, EMPRESA_ID) VALUES ('Almoço Grátis', 50, 'https://via.placeholder.com/150', 2);
+INSERT INTO VANTAGEM (DESCRICAO, CUSTO, FOTO_URL, EMPRESA_ID) VALUES ('Desconto 10% Mensalidade', 200, 'https://via.placeholder.com/150', 2);

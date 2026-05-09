@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Professor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Olá, Prof. <span th:text="${user.nome}">Professor</span>!</h1>
+        <div class="text-end">
+            <h3 class="text-primary">Saldo: <span th:text="${user.saldo}">0</span> moedas</h3>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Sair</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Enviar Moedas</h3>
+            <form th:action="@{/enviar-moedas}" method="post" class="card p-3 shadow-sm">
+                <div class="mb-3">
+                    <label class="form-label">Aluno</label>
+                    <select name="alunoId" class="form-select" required>
+                        <option value="">Selecione um aluno...</option>
+                        <option th:each="a : ${alunos}" th:value="${a.id}" th:text="${a.nome + ' (' + a.curso + ')'}"></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Quantidade</label>
+                    <input type="number" name="valor" class="form-control" min="1" th:max="${user.saldo}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Motivo</label>
+                    <textarea name="motivo" class="form-control" rows="3" required placeholder="Ex: Participação excelente na aula de hoje."></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Enviar Moedas</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h3>Histórico de Envios</h3>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="t : ${transacoes}">
+                    <div class="d-flex justify-content-between">
+                        <span>Para: <strong th:text="${t.destinatario.nome}">Aluno</strong></span>
+                        <span class="badge bg-primary" th:text="'-' + ${t.valor}">-10</span>
+                    </div>
+                    <small class="text-muted" th:text="${#temporals.format(t.data, 'dd/MM/yyyy HH:mm')}">Data</small><br>
+                    <small th:text="${t.motivo}">Motivo</small>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
