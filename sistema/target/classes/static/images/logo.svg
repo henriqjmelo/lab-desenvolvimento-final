@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" role="img" aria-label="Logo RU Restaurante Universitário">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b3b70" />
+      <stop offset="100%" stop-color="#0d5ea4" />
+    </linearGradient>
+  </defs>
+  <rect width="280" height="280" rx="40" fill="url(#bgGradient)" />
+  <path d="M74 114 L140 82 L206 114 L140 146 Z" fill="#fff" />
+  <path d="M110 96 L110 126 L170 126 L170 96" fill="#0b3b70" opacity="0.9" />
+  <path d="M135 146 L135 190" stroke="#fff" stroke-width="14" stroke-linecap="round" />
+  <path d="M108 158 C108 170 90 170 90 158 C90 146 108 146 108 158 Z" fill="#fff" />
+  <path d="M172 158 C172 170 154 170 154 158 C154 146 172 146 172 158 Z" fill="#fff" />
+  <path d="M101 184 C104 190 106 202 102 216" stroke="#fff" stroke-width="12" stroke-linecap="round" />
+  <path d="M177 184 C174 190 172 202 176 216" stroke="#fff" stroke-width="12" stroke-linecap="round" />
+  <text x="140" y="240" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="58" font-weight="700">RU</text>
+  <text x="140" y="262" text-anchor="middle" fill="#d0e4fb" font-family="Segoe UI, Arial, sans-serif" font-size="14">Restaurante Universitário</text>
+</svg>

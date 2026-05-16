@@ -4,50 +4,62 @@
     <meta charset="UTF-8">
     <title>Painel do Aluno</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Olá, <span th:text="${user.nome}">Aluno</span>!</h1>
-        <div class="text-end">
-            <h3 class="text-success">Saldo: <span th:text="${user.saldo}">0</span> moedas</h3>
-            <form th:action="@{/logout}" method="post">
-                <button type="submit" class="btn btn-sm btn-outline-danger">Sair</button>
-            </form>
+<body class="app-body">
+    <div th:insert="fragments/header :: siteHeader"></div>
+    <div class="container pb-5">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start gap-4 mb-4">
+            <div>
+                <h1 class="fw-bold">Olá, <span th:text="${user.nome}">Aluno</span>!</h1>
+                <p class="text-secondary">Veja suas vantagens, histórico e saldo atualizado.</p>
+            </div>
+            <div class="panel-card p-4 text-center" style="min-width: 240px;">
+                <h5 class="mb-2">Saldo Atual</h5>
+                <p class="display-6 text-success mb-3" th:text="${user.saldo} + ' moedas'">0 moedas</p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Sair</button>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <h3>Vantagens Disponíveis</h3>
-            <div class="row">
-                <div class="col-md-6 mb-3" th:each="v : ${vantagens}">
-                    <div class="card">
-                        <img th:src="${v.fotoUrl}" class="card-img-top" alt="Vantagem">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${v.descricao}">Descrição</h5>
-                            <p class="card-text">Custo: <strong th:text="${v.custo}">0</strong> moedas</p>
-                            <p class="small text-muted">Empresa: <span th:text="${v.empresa.nome}">Empresa</span></p>
-                            <form th:action="@{/trocar-vantagem}" method="post">
-                                <input type="hidden" name="vantagemId" th:value="${v.id}">
-                                <button type="submit" class="btn btn-primary" th:disabled="${user.saldo < v.custo}">Resgatar</button>
-                            </form>
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="panel-card p-4">
+                    <h3 class="mb-4">Vantagens Disponíveis</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6" th:each="v : ${vantagens}">
+                            <div class="card h-100 shadow-sm">
+                                <img th:src="${v.fotoUrl}" class="card-img-top" alt="Vantagem">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title" th:text="${v.descricao}">Descrição</h5>
+                                    <p class="card-text mb-2">Custo: <strong th:text="${v.custo}">0</strong> moedas</p>
+                                    <p class="small text-muted mb-3">Empresa: <span th:text="${v.empresa.nome}">Empresa</span></p>
+                                    <form th:action="@{/trocar-vantagem}" method="post" class="mt-auto">
+                                        <input type="hidden" name="vantagemId" th:value="${v.id}">
+                                        <button type="submit" class="btn btn-primary w-100" th:disabled="${user.saldo < v.custo}">Resgatar</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <h3>Extrato</h3>
-            <ul class="list-group">
-                <li class="list-group-item" th:each="t : ${transacoes}">
-                    <div class="d-flex justify-content-between">
-                        <span th:text="${t.remetente.nome}">Remetente</span>
-                        <span class="badge bg-success" th:text="'+' + ${t.valor}">+10</span>
-                    </div>
-                    <small class="text-muted" th:text="${#temporals.format(t.data, 'dd/MM/yyyy HH:mm')}">Data</small><br>
-                    <small th:text="${t.motivo}">Motivo</small>
-                </li>
-            </ul>
+            <div class="col-lg-4">
+                <div class="panel-card p-4">
+                    <h3 class="mb-3">Extrato</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="t : ${transacoes}">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span th:text="${t.remetente.nome}">Remetente</span>
+                                <span class="badge bg-success" th:text="'+' + ${t.valor}">+10</span>
+                            </div>
+                            <small class="text-muted d-block mb-1" th:text="${#temporals.format(t.data, 'dd/MM/yyyy HH:mm')}">Data</small>
+                            <small th:text="${t.motivo}">Motivo</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </body>

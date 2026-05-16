@@ -4,21 +4,31 @@
     <meta charset="UTF-8">
     <title>Painel da Empresa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
-<body class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Painel Parceiro: <span th:text="${user.nome}">Empresa</span></h1>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit" class="btn btn-sm btn-outline-danger">Sair</button>
-        </form>
-    </div>
-
-    <div class="alert alert-info">
-        Como empresa parceira, você pode visualizar as vantagens cadastradas e os cupons resgatados (funcionalidade em expansão na Release 2).
-    </div>
-    
-    <div class="mt-4">
-        <a href="/" class="btn btn-secondary">Voltar ao Início</a>
+<body class="app-body">
+    <div th:insert="fragments/header :: siteHeader"></div>
+    <div class="container pb-5">
+        <div class="panel-card p-4 mb-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
+                <div>
+                    <h1 class="fw-bold">Painel Parceiro</h1>
+                    <p class="text-secondary mb-1">Bem-vindo, <strong th:text="${user.nome}">Empresa</strong>.</p>
+                    <p class="text-muted">Acompanhe suas vantagens e cupons resgatados com mais clareza.</p>
+                </div>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-outline-danger">Sair</button>
+                </form>
+            </div>
+        </div>
+        <div class="panel-card p-4 mb-4">
+            <div class="alert alert-info mb-0">
+                Como empresa parceira, você pode visualizar as vantagens cadastradas e os cupons resgatados (funcionalidade em expansão na Release 2).
+            </div>
+        </div>
+        <div class="panel-card p-4 text-center">
+            <a href="/" class="btn btn-secondary">Voltar ao Início</a>
+        </div>
     </div>
 </body>
 </html>
