@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class MainController {
     private VantagemRepository vantagemRepository;
     @Autowired
     private TransacaoRepository transacaoRepository;
+    @Autowired
+    private CupomRepository cupomRepository;
     @Autowired
     private MoedaService moedaService;
     @Autowired
@@ -64,14 +67,28 @@ public class MainController {
         if (user instanceof Aluno) {
             model.addAttribute("vantagens", vantagemRepository.findAll());
             model.addAttribute("transacoes", transacaoRepository.findByRemetenteOrDestinatario(user, user));
+            model.addAttribute("cupons", cupomRepository.findByAluno((Aluno) user));
             return "home-aluno";
         } else if (user instanceof Professor) {
             model.addAttribute("alunos", alunoRepository.findAll());
             model.addAttribute("transacoes", transacaoRepository.findByRemetenteOrDestinatario(user, user));
             return "home-professor";
         } else {
+            model.addAttribute("vantagensEmpresa", vantagemRepository.findByEmpresa((Empresa) user));
+            model.addAttribute("vantagem", new Vantagem());
             return "home-empresa";
         }
+    }
+
+    @PostMapping("/cadastro/vantagem")
+    public String salvarVantagem(Authentication auth, Vantagem vantagem) {
+        Usuario user = usuarioRepository.findByEmail(auth.getName()).orElseThrow();
+        if (!(user instanceof Empresa)) {
+            return "redirect:/home";
+        }
+        vantagem.setEmpresa((Empresa) user);
+        vantagemRepository.save(vantagem);
+        return "redirect:/home";
     }
 
     @PostMapping("/enviar-moedas")
@@ -82,10 +99,16 @@ public class MainController {
     }
 
     @PostMapping("/trocar-vantagem")
-    public String trocarVantagem(Authentication auth, Long vantagemId) {
+    public String trocarVantagem(Authentication auth, Long vantagemId, RedirectAttributes redirectAttributes) {
         Usuario aluno = usuarioRepository.findByEmail(auth.getName()).orElseThrow();
         Vantagem v = vantagemRepository.findById(vantagemId).orElseThrow();
-        moedaService.trocarMoedas(aluno.getId(), v);
+        try {
+            Cupom cupom = moedaService.trocarMoedas(aluno.getId(), v);
+            redirectAttributes.addFlashAttribute("sucesso",
+                    "Vantagem resgatada com sucesso! Seu cupom: " + cupom.getCodigo());
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("erro", "Não foi possível resgatar: " + e.getMessage());
+        }
         return "redirect:/home";
     }
 }

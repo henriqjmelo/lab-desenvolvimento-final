@@ -1,7 +1,11 @@
 package com.pucminas.moedaestudantil.repository;
 
+import com.pucminas.moedaestudantil.model.Aluno;
 import com.pucminas.moedaestudantil.model.Cupom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface CupomRepository extends JpaRepository<Cupom, Long> {
+    List<Cupom> findByAluno(Aluno aluno);
 }

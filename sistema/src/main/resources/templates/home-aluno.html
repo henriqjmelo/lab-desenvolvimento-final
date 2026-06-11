@@ -9,6 +9,9 @@
 <body class="app-body">
     <div th:insert="fragments/header :: siteHeader"></div>
     <div class="container pb-5">
+        <div class="alert alert-success" th:if="${sucesso}" th:text="${sucesso}"></div>
+        <div class="alert alert-danger" th:if="${erro}" th:text="${erro}"></div>
+
         <div class="d-flex flex-column flex-lg-row justify-content-between align-items-start gap-4 mb-4">
             <div>
                 <h1 class="fw-bold">Olá, <span th:text="${user.nome}">Aluno</span>!</h1>
@@ -46,9 +49,9 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="panel-card p-4">
+                <div class="panel-card p-4 mb-4">
                     <h3 class="mb-3">Extrato</h3>
-                    <ul class="list-group list-group-flush">
+                    <ul class="list-group list-group-flush" th:if="${not #lists.isEmpty(transacoes)}">
                         <li class="list-group-item" th:each="t : ${transacoes}">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <span th:text="${t.remetente.nome}">Remetente</span>
@@ -58,6 +61,25 @@
                             <small th:text="${t.motivo}">Motivo</small>
                         </li>
                     </ul>
+                    <div class="alert alert-secondary mb-0" th:if="${#lists.isEmpty(transacoes)}">
+                        Nenhuma movimentação ainda.
+                    </div>
+                </div>
+
+                <div class="panel-card p-4">
+                    <h3 class="mb-3">Meus Cupons</h3>
+                    <ul class="list-group list-group-flush" th:if="${not #lists.isEmpty(cupons)}">
+                        <li class="list-group-item" th:each="c : ${cupons}">
+                            <div class="d-flex justify-content-between">
+                                <span th:text="${c.vantagem.descricao}">Vantagem</span>
+                                <span class="badge bg-primary" th:text="${c.vantagem.empresa.nome}">Empresa</span>
+                            </div>
+                            <small class="text-muted">Código: <span th:text="${c.codigo}">codigo</span></small>
+                        </li>
+                    </ul>
+                    <div class="alert alert-secondary mb-0" th:if="${#lists.isEmpty(cupons)}">
+                        Nenhum cupom resgatado ainda.
+                    </div>
                 </div>
             </div>
         </div>

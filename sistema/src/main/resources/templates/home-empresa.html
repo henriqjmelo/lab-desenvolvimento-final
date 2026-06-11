@@ -23,10 +23,54 @@
         </div>
         <div class="panel-card p-4 mb-4">
             <div class="alert alert-info mb-0">
-                Como empresa parceira, você pode visualizar as vantagens cadastradas e os cupons resgatados (funcionalidade em expansão na Release 2).
+                Como empresa parceira, você pode cadastrar novas vantagens e ver a lista das vantagens já registradas para resgate pelos alunos.
             </div>
         </div>
-        <div class="panel-card p-4 text-center">
+
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="panel-card p-4">
+                    <h3 class="mb-3">Vantagens Cadastradas</h3>
+                    <div class="row g-3" th:if="${vantagensEmpresa.size() > 0}">
+                        <div class="col-md-6" th:each="v : ${vantagensEmpresa}">
+                            <div class="card h-100 shadow-sm">
+                                <img th:src="${v.fotoUrl}" class="card-img-top" alt="Vantagem" th:if="${v.fotoUrl != null}">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${v.descricao}">Descrição</h5>
+                                    <p class="card-text">Custo: <strong th:text="${v.custo}">0</strong> moedas</p>
+                                    <p class="small text-muted">Empresa: <span th:text="${user.nome}">Empresa</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-secondary mb-0" th:if="${vantagensEmpresa.size() == 0}">
+                        Nenhuma vantagem cadastrada ainda. Use o formulário ao lado para criar a primeira vantagem.
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="panel-card p-4">
+                    <h3 class="mb-3">Cadastrar Nova Vantagem</h3>
+                    <form th:action="@{/cadastro/vantagem}" method="post" th:object="${vantagem}">
+                        <div class="mb-3">
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <input type="text" id="descricao" th:field="*{descricao}" class="form-control" placeholder="Ex: Almoço Grátis" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="custo" class="form-label">Custo em moedas</label>
+                            <input type="number" id="custo" th:field="*{custo}" class="form-control" placeholder="50" min="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fotoUrl" class="form-label">URL da imagem</label>
+                            <input type="url" id="fotoUrl" th:field="*{fotoUrl}" class="form-control" placeholder="https://...">
+                        </div>
+                        <button type="submit" class="btn btn-success">Cadastrar Vantagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-card p-4 text-center mt-4">
             <a href="/" class="btn btn-secondary">Voltar ao Início</a>
         </div>
     </div>
