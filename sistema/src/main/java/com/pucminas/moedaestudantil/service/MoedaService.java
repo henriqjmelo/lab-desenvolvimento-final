@@ -24,6 +24,9 @@ public class MoedaService {
     @Autowired
     private CupomRepository cupomRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Transactional
     public void enviarMoedas(Long professorId, Long alunoId, Integer valor, String motivo) {
         Professor prof = professorRepository.findById(professorId).orElseThrow();
@@ -47,7 +50,19 @@ public class MoedaService {
         alunoRepository.save(aluno);
         transacaoRepository.save(t);
         
-        System.out.println("Email enviado para " + aluno.getEmail() + ": Você recebeu " + valor + " moedas!");
+        try {
+            emailService.enviarEmail(
+                    aluno.getEmail(),
+                    "Você recebeu moedas!",
+                    "Olá " + aluno.getNome() + ",\n\n" +
+                            "Você recebeu " + valor + " moedas de " + prof.getNome() + ".\n" +
+                            "Motivo: " + motivo + "\n\n" +
+                            "Seu novo saldo é de " + aluno.getSaldo() + " moedas.\n\n" +
+                            "Sistema de Moeda Estudantil - RU"
+            );
+        } catch (Exception e) {
+            System.out.println("Falha ao enviar email para " + aluno.getEmail() + ": " + e.getMessage());
+        }
     }
 
     @Transactional
