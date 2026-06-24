@@ -51,14 +51,27 @@ public class MoedaService {
         transacaoRepository.save(t);
         
         try {
+            String corpo =
+                    "<div style=\"background:#0f2c5c;padding:40px 20px;font-family:Arial,sans-serif;text-align:center;\">" +
+                            "<h1 style=\"color:#ffd700;font-size:48px;margin:0 0 10px;text-shadow:2px 2px 4px rgba(0,0,0,0.4);\">&#127881; VOCÊ GANHOU MOEDAS! &#127881;</h1>" +
+                            "<p style=\"color:#ffffff;font-size:20px;margin:0 0 30px;\">Olá, <strong>" + aluno.getNome() + "</strong>!</p>" +
+                            "<div style=\"background:#ffffff;border-radius:16px;padding:30px;margin:0 auto;max-width:420px;\">" +
+                            "<p style=\"font-size:22px;color:#172b4d;margin:0 0 10px;\">Você recebeu</p>" +
+                            "<p style=\"font-size:64px;font-weight:bold;color:#28a745;margin:0;\">+" + valor + "</p>" +
+                            "<p style=\"font-size:24px;color:#28a745;margin:0 0 20px;font-weight:bold;\">moedas</p>" +
+                            "<p style=\"font-size:16px;color:#5f6d82;margin:0 0 6px;\">Enviado por: <strong>" + prof.getNome() + "</strong></p>" +
+                            "<p style=\"font-size:16px;color:#5f6d82;margin:0 0 6px;\">Motivo: <strong>" + motivo + "</strong></p>" +
+                            "<hr style=\"border:none;border-top:1px solid #e9eef6;margin:20px 0;\">" +
+                            "<p style=\"font-size:18px;color:#172b4d;margin:0;\">Saldo atual</p>" +
+                            "<p style=\"font-size:36px;font-weight:bold;color:#0d6efd;margin:0;\">" + aluno.getSaldo() + " moedas</p>" +
+                            "</div>" +
+                            "<p style=\"color:#9fb3d1;font-size:13px;margin-top:30px;\">Sistema de Moeda Estudantil &mdash; RU Restaurante Universitário</p>" +
+                            "</div>";
+
             emailService.enviarEmail(
                     aluno.getEmail(),
-                    "Você recebeu moedas!",
-                    "Olá " + aluno.getNome() + ",\n\n" +
-                            "Você recebeu " + valor + " moedas de " + prof.getNome() + ".\n" +
-                            "Motivo: " + motivo + "\n\n" +
-                            "Seu novo saldo é de " + aluno.getSaldo() + " moedas.\n\n" +
-                            "Sistema de Moeda Estudantil - RU"
+                    "🎉 Você recebeu " + valor + " moedas!",
+                    corpo
             );
         } catch (Exception e) {
             System.out.println("Falha ao enviar email para " + aluno.getEmail() + ": " + e.getMessage());

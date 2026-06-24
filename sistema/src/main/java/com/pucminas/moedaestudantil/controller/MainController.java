@@ -45,6 +45,18 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/login/aluno")
+    public String loginAluno(Model model) {
+        model.addAttribute("tipo", "aluno");
+        return "login";
+    }
+
+    @GetMapping("/login/professor")
+    public String loginProfessor(Model model) {
+        model.addAttribute("tipo", "professor");
+        return "login";
+    }
+
     @GetMapping("/cadastro/aluno")
     public String formAluno(Model model) {
         model.addAttribute("aluno", new Aluno());
