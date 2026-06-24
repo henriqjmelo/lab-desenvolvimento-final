@@ -24,4 +24,18 @@ public class EmailService {
             throw new RuntimeException("Erro ao enviar email: " + e.getMessage(), e);
         }
     }
+
+    public void enviarEmailComImagemInline(String destinatario, String assunto, String htmlComCid, String cid, byte[] imagemPng) {
+        try {
+            MimeMessage mensagem = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mensagem, true, "UTF-8");
+            helper.setTo(destinatario);
+            helper.setSubject(assunto);
+            helper.setText(htmlComCid, true);
+            helper.addInline(cid, new org.springframework.core.io.ByteArrayResource(imagemPng), "image/png");
+            mailSender.send(mensagem);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao enviar email: " + e.getMessage(), e);
+        }
+    }
 }
